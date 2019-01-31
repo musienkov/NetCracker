@@ -22,6 +22,9 @@ public class Main {
         ) {
             System.out.println(m.getName());
         }
+
+        System.out.println("Subclasses:");
+        Analyzer.findSubclasses();
     }
 
 }

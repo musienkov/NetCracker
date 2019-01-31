@@ -7,11 +7,16 @@
 package analyzer;
 
 
+import com.google.inject.Module;
+import org.reflections.Reflections;
+import sorters.AbstractSorter;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 public class Analyzer {
     /**
@@ -20,6 +25,8 @@ public class Analyzer {
      * @param annotation - annotation which we are looking for
      * @return list of methods marked by annotation
      */
+
+
     public static List<Method> getMethodsAnnotatedWith(final Class<?> type, final Class<? extends Annotation> annotation) {
         final List<Method> methods = new ArrayList<Method>();
         Class<?> klass = type;
@@ -37,5 +44,19 @@ public class Analyzer {
             klass = klass.getSuperclass();
         }
         return methods;
+    }
+
+
+    public static void findSubclasses(){
+
+        Reflections reflections = new Reflections("sorters");
+        Set<Class<? extends AbstractSorter>> subTypes =
+                reflections.getSubTypesOf(AbstractSorter.class);
+        for (Class c:subTypes
+             ) {
+            System.out.println(c.getName());
+
+        }
+
     }
 }
