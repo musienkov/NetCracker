@@ -12,6 +12,7 @@ import org.reflections.Reflections;
 import sorters.AbstractSorter;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +22,8 @@ import java.util.Set;
 public class Analyzer {
     /**
      * Find method marked by annotation
-     * @param type - Class type
+     *
+     * @param type       - Class type
      * @param annotation - annotation which we are looking for
      * @return list of methods marked by annotation
      */
@@ -47,16 +49,39 @@ public class Analyzer {
     }
 
 
-    public static void findSubclasses(){
+    public static void findSubclasses() throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
 
         Reflections reflections = new Reflections("sorters");
         Set<Class<? extends AbstractSorter>> subTypes =
                 reflections.getSubTypesOf(AbstractSorter.class);
-        for (Class c:subTypes
-             ) {
+        for (Class<?> c : subTypes
+        ) {
             System.out.println(c.getName());
+            Method[] methods = c.getMethods();
+            for (Method method : methods) {
+
+
+               if(method.getName().equals("sort")&&!(c.getName().equals("sorters.BubbleSorter"))){
+                   System.out.println("i find sort");
+                    int[] array = new int[]{5,9,1,4};
+                   Class<?> myClass = Class.forName(c.getName());
+                   Object obj = myClass.newInstance();
+                   String methodName = "";
+                   methodName = "sort";
+                   Method setNameMethod = obj.getClass().getMethod(methodName, int[].class);
+                  setNameMethod.invoke(obj, array) ; // pass arg
+
+
+                       System.out.println(Arrays.toString(array));
+
+                   
+
+            }
+            }
+          //  Class[] params = new Class[] {Integer[].class};
+
+          //  Method method = c.getMethod("sort", params);
 
         }
-
     }
 }
