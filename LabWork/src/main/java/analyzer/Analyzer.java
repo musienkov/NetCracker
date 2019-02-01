@@ -61,8 +61,8 @@ public class Analyzer {
             for (Method method : methods) {
 
 
-               if(method.getName().equals("sort")&&!(c.getName().equals("sorters.BubbleSorter"))){
-                   System.out.println("i find sort");
+               if(method.getName().equals("sort")&&!(c.getName().equals("sorters.BubbleSorter"))&&!(c.getName().equals("sorters.Merge"))){
+
                     int[] array = new int[]{5,9,1,4};
                    Class<?> myClass = Class.forName(c.getName());
                    Object obj = myClass.newInstance();
@@ -74,7 +74,7 @@ public class Analyzer {
 
                        System.out.println(Arrays.toString(array));
 
-                   
+
 
             }
             }
