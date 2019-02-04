@@ -78,7 +78,7 @@ public class Analyzer {
     }
 
     public static void analyzer() throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
-
+        ArrayList<Long> arrayTimes = new ArrayList();
         List<Method> fillerMethods = Analyzer.getMethodsAnnotatedWith(Fillers.class, Filler.class);
         Reflections reflections = new Reflections("sorters");
         Set<Class<? extends AbstractSorter>> subTypes = reflections.getSubTypesOf(AbstractSorter.class);
@@ -98,8 +98,11 @@ public class Analyzer {
                         Class<?> myClass = Class.forName(c.getName());
                         Object sorterObject = myClass.newInstance();
                         Method setNameMethod = sorterObject.getClass().getMethod("sort", int[].class);
+
+                        long startTime1 = System.nanoTime();
                         setNameMethod.invoke(sorterObject, myArray); // pass arg
-                        System.out.println(Arrays.toString(myArray));
+                        long sortTime1 = System.nanoTime() - startTime1;
+                        System.out.println("Time: "+ sortTime1+" ns");
                     }
                 }
             }

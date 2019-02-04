@@ -20,12 +20,8 @@ public class BubbleSortEndToStart extends BubbleSorter {
         for (int i = array.length - 1; i >= 0; i--)
             for (int j = array.length - 1; j >= n - i; j--) {
                 if (array[j] < array[j - 1]) {
-
-                    int temp = array[j];
-                    array[j] = array[j - 1];
-                    array[j - 1] = temp;
+                    swap(array,j,j-1);
                 }
-
             }
         return array;
     }
