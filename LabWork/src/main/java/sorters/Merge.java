@@ -9,10 +9,7 @@ import java.util.Arrays;
 /**
  * This class realizes Merge sort using Half division using variable types of sorters
  */
-public class Merge extends AbstractSorter {
-
-
-
+public abstract class Merge extends AbstractSorter {
 
     /**
      * This method combines two sorted arrays
@@ -80,12 +77,7 @@ public class Merge extends AbstractSorter {
     }
 
 
-
-
-
-
     @Override
-    public int[] sort(int[] array) {
-        return new int[0];
-    }
+    public abstract int[] sort(int[] array);
+
 }

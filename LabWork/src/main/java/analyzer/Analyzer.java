@@ -8,6 +8,8 @@ package analyzer;
 
 
 import com.google.inject.Module;
+import fillers.Filler;
+import fillers.Fillers;
 import org.reflections.Reflections;
 import sorters.AbstractSorter;
 
@@ -59,29 +61,48 @@ public class Analyzer {
             System.out.println(c.getName());
             Method[] methods = c.getMethods();
             for (Method method : methods) {
-
-
-               if(method.getName().equals("sort")&&!(c.getName().equals("sorters.BubbleSorter"))&&!(c.getName().equals("sorters.Merge"))){
-
-                    int[] array = new int[]{5,9,1,4};
-                   Class<?> myClass = Class.forName(c.getName());
-                   Object obj = myClass.newInstance();
-                   String methodName = "";
-                   methodName = "sort";
-                   Method setNameMethod = obj.getClass().getMethod(methodName, int[].class);
-                  setNameMethod.invoke(obj, array) ; // pass arg
-
-
-                       System.out.println(Arrays.toString(array));
-
-
-
+                if (method.getName().equals("sort") && !(c.getName().equals("sorters.BubbleSorter")) && !(c.getName().equals("sorters.Merge"))) {
+                    int[] array = new int[]{5, 9, 1, 4};
+                    Class<?> myClass = Class.forName(c.getName());
+                    Object obj = myClass.newInstance();
+                    String methodName = "";
+                    methodName = "sort";
+                    Method setNameMethod = obj.getClass().getMethod(methodName, int[].class);
+                    setNameMethod.invoke(obj, array); // pass arg
+                    System.out.println(Arrays.toString(array));
+                }
             }
+
+
+        }
+    }
+
+    public static void analyzer() throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+
+        List<Method> fillerMethods = Analyzer.getMethodsAnnotatedWith(Fillers.class, Filler.class);
+        Reflections reflections = new Reflections("sorters");
+        Set<Class<? extends AbstractSorter>> subTypes = reflections.getSubTypesOf(AbstractSorter.class);
+        for (Class<?> c : subTypes
+        ) {
+            Method[] methods = c.getMethods();
+            for (Method method : methods) {
+                if (method.getName().equals("sort") && !(c.getName().equals("sorters.BubbleSorter")) && !(c.getName().equals("sorters.Merge"))) {
+                    for (Method m : fillerMethods
+                    ) {
+                        Class<?> myFiller = Class.forName(m.getDeclaringClass().getName());
+                        Object fillerObject = myFiller.newInstance();
+                        String fillerName;
+                        fillerName = m.getName();
+                        Method setFillerMethod = fillerObject.getClass().getMethod(fillerName, int.class);
+                        int[] myArray = (int[]) setFillerMethod.invoke(fillerObject, 5);
+                        Class<?> myClass = Class.forName(c.getName());
+                        Object sorterObject = myClass.newInstance();
+                        Method setNameMethod = sorterObject.getClass().getMethod("sort", int[].class);
+                        setNameMethod.invoke(sorterObject, myArray); // pass arg
+                        System.out.println(Arrays.toString(myArray));
+                    }
+                }
             }
-          //  Class[] params = new Class[] {Integer[].class};
-
-          //  Method method = c.getMethod("sort", params);
-
         }
     }
 }

@@ -20,6 +20,7 @@ public class Fillers {
             array[i] = (int) (Math.random() * 100);
         }
         Arrays.sort(array);
+        System.out.println("createSortedArray was invoked!");
         return array;
     }
 
@@ -36,6 +37,7 @@ public class Fillers {
         }
         Arrays.sort(array);
         array[length - 1] = (int) (Math.random() * 100);
+        System.out.println("createSortedWithRandom was invoked!");
         return array;
     }
     /**
@@ -60,7 +62,7 @@ public class Fillers {
             j--;
             i++;
         }
-
+        System.out.println("createReversSortedArray was invoked!");
         return array;
     }
     /**
@@ -74,6 +76,7 @@ public class Fillers {
         for (int i = 0; i < length; i++) {
             array[i] = (int) (Math.random() * 100);
         }
+        System.out.println("createUnsortedArray was invoked!");
         return array;
     }
 

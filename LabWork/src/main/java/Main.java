@@ -18,14 +18,14 @@ public class Main {
 
 
 
-        List<Method> annotiedMethods = Analyzer.getMethodsAnnotatedWith(Fillers.class, Filler.class);
-        for (Method m : annotiedMethods
-        ) {
-            System.out.println(m.getName());
-        }
+
+
+
+
 
         System.out.println("Subclasses:");
-        Analyzer.findSubclasses();
+        //Analyzer.findSubclasses();
+        Analyzer.analyzer();
     }
 
 }
