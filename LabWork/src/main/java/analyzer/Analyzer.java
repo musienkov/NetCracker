@@ -30,8 +30,7 @@ public class Analyzer {
      * @return list of methods marked by annotation
      */
 
-
-    public static List<Method> getMethodsAnnotatedWith(final Class<?> type, final Class<? extends Annotation> annotation) {
+    private static List<Method> getMethodsAnnotatedWith(final Class<?> type, final Class<? extends Annotation> annotation) {
         final List<Method> methods = new ArrayList<Method>();
         Class<?> klass = type;
         while (klass != Object.class) { // need to iterated thought hierarchy in order to retrieve methods from above the current instance
@@ -50,32 +49,6 @@ public class Analyzer {
         return methods;
     }
 
-
-    public static void findSubclasses() throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
-
-        Reflections reflections = new Reflections("sorters");
-        Set<Class<? extends AbstractSorter>> subTypes =
-                reflections.getSubTypesOf(AbstractSorter.class);
-        for (Class<?> c : subTypes
-        ) {
-            System.out.println(c.getName());
-            Method[] methods = c.getMethods();
-            for (Method method : methods) {
-                if (method.getName().equals("sort") && !(c.getName().equals("sorters.BubbleSorter")) && !(c.getName().equals("sorters.Merge"))) {
-                    int[] array = new int[]{5, 9, 1, 4};
-                    Class<?> myClass = Class.forName(c.getName());
-                    Object obj = myClass.newInstance();
-                    String methodName = "";
-                    methodName = "sort";
-                    Method setNameMethod = obj.getClass().getMethod(methodName, int[].class);
-                    setNameMethod.invoke(obj, array); // pass arg
-                    System.out.println(Arrays.toString(array));
-                }
-            }
-
-
-        }
-    }
 
     public static void analyzer() throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         ArrayList<Long> arrayTimes = new ArrayList();
