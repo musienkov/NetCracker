@@ -2,7 +2,7 @@
 package sorters;
 
 /**
- * This class realizes sorting the array using BubbleSort from End To Start
+ * This class realizes sorting the array <br> using BubbleSort from End To Start
  * @author Musienko
  */
 public class BubbleSortEndToStart extends BubbleSorter {
@@ -10,6 +10,15 @@ public class BubbleSortEndToStart extends BubbleSorter {
      *
      * @param array - array that will be sorted
      * @return  sorted array
+     * @see BubbleSorter
+     * Method swap: <pre>
+     *          {@code protected void swap(int[] array, int i, int j) {
+     *               int temp = array[i];
+     *               array[i] = array[j];
+     *              array[j] = temp;
+     *           }
+     *         }
+     *       </pre>
      */
     public int[] sort(int[] array) {
 

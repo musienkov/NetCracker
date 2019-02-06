@@ -1,6 +1,6 @@
 package sorters;
 /**
- * This class realizes merge sort using BubbleSort from end to start
+ * This class realizes merge sort <br> using  BubbleSort from end to start
  * @author Musienko
  */
 public class MergeBubbleSort_end_to_start extends Merge {
@@ -9,16 +9,16 @@ public class MergeBubbleSort_end_to_start extends Merge {
 
     /**
      * Sorts arrays using merge sort with Bubble sort sorting from end to start
-     * @param arr - started array
+     * @param array - started array
      * @return sorted array
      * @see BubbleSortEndToStart#sort(int[])
      * @see Merge#merge(int[], int[], int[])
      */
-    public int[] sort(int[] arr) {
-        int L[] = super.createLeftPart(arr);
-        int R[] = super.createRightPart(arr);
-        bubbleSorter_end_to_start.sort(L);
-        bubbleSorter_end_to_start.sort(R);
-        return merge(arr, L, R);
+    public int[] sort(int[] array) {
+        int[] leftPart = super.createLeftPart(array);
+        int[] rightPart = super.createRightPart(array);
+        bubbleSorter_end_to_start.sort(leftPart);
+        bubbleSorter_end_to_start.sort(rightPart);
+        return merge(array, leftPart, rightPart);
     }
 }

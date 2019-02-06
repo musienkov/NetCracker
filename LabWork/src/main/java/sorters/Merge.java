@@ -4,7 +4,7 @@ package sorters;
 import java.util.Arrays;
 
 /**
- * This class realizes Merge sort using Half division using variable types of sorters
+ * This class realizes Merge sort <br> using Half division using variable types of sorters
  * @author Musienko
  *
  */
@@ -12,25 +12,25 @@ public abstract class Merge extends AbstractSorter {
 
     /**
      * This method combines two sorted arrays
-     * @param arr - current array
-     * @param L - left part of array
-     * @param R - right part of array
+     * @param array - current array
+     * @param leftPart - left part of array
+     * @param rightPart - right part of array
      * @return sorted merged array
      */
-     int[] merge(int arr[], int[] L, int[] R) {
+     int[] merge(int array[], int[] leftPart, int[] rightPart) {
 
 
-        int n1 = L.length;
-        int n2 = R.length;
+        int n1 = leftPart.length;
+        int n2 = rightPart.length;
         int i = 0, j = 0;
 
         int k = 0;
         while (i < n1 && j < n2) {
-            if (L[i] <= R[j]) {
-                arr[k] = L[i];
+            if (leftPart[i] <= rightPart[j]) {
+                array[k] = leftPart[i];
                 i++;
             } else {
-                arr[k] = R[j];
+                array[k] = rightPart[j];
                 j++;
             }
             k++;
@@ -38,41 +38,41 @@ public abstract class Merge extends AbstractSorter {
 
 
         while (i < n1) {
-            arr[k] = L[i];
+            array[k] = leftPart[i];
             i++;
             k++;
         }
 
         while (j < n2) {
-            arr[k] = R[j];
+            array[k] = rightPart[j];
             j++;
             k++;
         }
-        return arr;
+        return array;
     }
 
     /**
      * Create left part of array
-     * @param arr - started array
+     * @param array - started array
      * @return array
      */
-    int[] createLeftPart(int[] arr) {
-        int l = 0;
-        int r = arr.length;
-        int m = (l + r) / 2;
-        return Arrays.copyOfRange(arr, l, m);
+    int[] createLeftPart(int[] array) {
+        int left = 0;
+        int right = array.length;
+        int mid = (left + right) / 2;
+        return Arrays.copyOfRange(array, left, mid);
     }
     /**
      * Create Right part of array
-     * @param arr - started array
+     * @param array - started array
      * @return array
      */
-     int[] createRightPart(int[] arr) {
-        int l = 0;
-        int r = arr.length;
-        int m = (l + r) / 2;
+     int[] createRightPart(int[] array) {
+        int left = 0;
+        int right = array.length;
+        int mid = (left + right) / 2;
 
-        return Arrays.copyOfRange(arr, m, r);
+        return Arrays.copyOfRange(array, mid, right);
     }
 
 

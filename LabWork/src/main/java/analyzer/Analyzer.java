@@ -35,7 +35,7 @@ public class Analyzer {
             for (final Method method : allMethods) {
                 if (method.isAnnotationPresent(annotation)) {
                     Annotation Filler = method.getAnnotation(annotation);
-                    // TODO process annotInstance
+
                     methods.add(method);
                 }
             }
@@ -46,9 +46,8 @@ public class Analyzer {
     }
 
     /**
-     *
-     * @param arrayLength
-
+     * Automatic analyzer of all sorts and all fillers
+     * @param arrayLength - length of array
      */
     public static void analyzer(int arrayLength) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         ArrayList<Long> arrayTimes = new ArrayList();

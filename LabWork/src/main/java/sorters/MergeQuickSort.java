@@ -1,6 +1,6 @@
 package sorters;
 /**
- * This class realizes merge sort using QuickSort
+ * This class realizes merge sort <br> using QuickSort
  * @author Musienko
  */
 public class MergeQuickSort extends Merge {
@@ -8,18 +8,18 @@ public class MergeQuickSort extends Merge {
     private QuickSort quickSort = new QuickSort();
     /**
      * Sorts arrays using merge sort with Quick sort
-     * @param arr - started array
+     * @param array - started array
      * @return sorted array
      * @see QuickSort#sort(int[])
      * @see Merge#merge(int[], int[], int[])
      * See also  {@link Merge#createLeftPart(int[])}
      * See also  {@link Merge#createRightPart(int[])}
      */
-    public int[] sort(int[] arr) {
-        int L[] = super.createLeftPart(arr);
-        int R[] = super.createRightPart(arr);
-        quickSort.sort(L);
-        quickSort.sort(R);
-        return merge(arr, L, R);
+    public int[] sort(int[] array) {
+        int[] leftPart = super.createLeftPart(array);
+        int[] rightPart = super.createRightPart(array);
+        quickSort.sort(leftPart);
+        quickSort.sort(rightPart);
+        return merge(array, leftPart, rightPart);
     }
 }
