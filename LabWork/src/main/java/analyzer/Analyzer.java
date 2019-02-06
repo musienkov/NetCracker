@@ -50,7 +50,7 @@ public class Analyzer {
     }
 
 
-    public static void analyzer() throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+    public static void analyzer(int arrayLength) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         ArrayList<Long> arrayTimes = new ArrayList();
         List<Method> fillerMethods = Analyzer.getMethodsAnnotatedWith(Fillers.class, Filler.class);
         Reflections reflections = new Reflections("sorters");
@@ -67,7 +67,7 @@ public class Analyzer {
                         String fillerName;
                         fillerName = m.getName();
                         Method setFillerMethod = fillerObject.getClass().getMethod(fillerName, int.class);
-                        int[] myArray = (int[]) setFillerMethod.invoke(fillerObject, 5);
+                        int[] myArray = (int[]) setFillerMethod.invoke(fillerObject, arrayLength);
                         Class<?> myClass = Class.forName(c.getName());
                         Object sorterObject = myClass.newInstance();
                         Method setNameMethod = sorterObject.getClass().getMethod("sort", int[].class);

@@ -1,6 +1,6 @@
 package sorters;
 
-public class mergeBubbleSort_start_to_end extends Merge{
+public class MergeBubbleSort_start_to_end extends Merge{
 
     private BubbleSorter bubbleSorter_start_to_end = new BubbleSortStartToEnd();
     /**
