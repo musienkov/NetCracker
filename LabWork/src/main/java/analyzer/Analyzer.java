@@ -78,7 +78,7 @@ public class Analyzer {
                         long startTime1 = System.nanoTime();
                         setNameMethod.invoke(sorterObject, myArray);
                         long sortTime1 = System.nanoTime() - startTime1;
-                        System.out.println("Time: " + sortTime1 + " ns");
+                       
                     }
                 }
             }
