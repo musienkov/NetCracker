@@ -1,18 +1,10 @@
-/**
- * This class analyze performance rate of variable types of sorting and filling
- *
- * @author Musienko
- */
+
 
 package analyzer;
-
-
-import com.google.inject.Module;
 import fillers.Filler;
 import fillers.Fillers;
 import org.reflections.Reflections;
 import sorters.AbstractSorter;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -20,7 +12,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
-
+/**
+ * This class analyze performance rate of variable types of sorting and filling
+ * @author Musienko
+ *
+ */
 public class Analyzer {
     /**
      * Find method marked by annotation
@@ -49,7 +45,11 @@ public class Analyzer {
         return methods;
     }
 
+    /**
+     *
+     * @param arrayLength
 
+     */
     public static void analyzer(int arrayLength) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         ArrayList<Long> arrayTimes = new ArrayList();
         List<Method> fillerMethods = Analyzer.getMethodsAnnotatedWith(Fillers.class, Filler.class);

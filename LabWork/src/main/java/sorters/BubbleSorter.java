@@ -1,11 +1,10 @@
-/**
- * @author Musienko
- *
- */
+
 package sorters;
 
 /**
- * Abstract class for two types of Bubble sort
+ * Abstract class Bubble Sorter
+ * @author Musienko
+ *
  */
 public abstract class BubbleSorter extends AbstractSorter {
     /**

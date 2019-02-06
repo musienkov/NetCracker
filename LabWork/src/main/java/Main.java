@@ -16,21 +16,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-
-
-
-
-
-
-
-
-       // System.out.println("Subclasses:");
-        //Analyzer.findSubclasses();
-      //  Analyzer.analyzer(5);
-       // Fillers.createSortedArray(5);
-       /* System.out.println(Arrays.toString(Fillers.createSortedArray(5)));
-        System.out.println(Arrays.toString(Fillers.createSortedWithRandom(5)));*/
-        System.out.println(Arrays.toString(Fillers.createReversSortedArray(5)));
+        Analyzer.analyzer(10);
     }
 
 }

@@ -1,12 +1,9 @@
 
-/**
- * @author Musienko
- *
- */
 package sorters;
 
 /**
- * Class that realizes Bubble sort from end to start array
+ * This class realizes sorting the array using BubbleSort from End To Start
+ * @author Musienko
  */
 public class BubbleSortEndToStart extends BubbleSorter {
     /**

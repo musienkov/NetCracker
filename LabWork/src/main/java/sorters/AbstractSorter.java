@@ -1,8 +1,11 @@
-package sorters;
 
+
+package sorters;
 /**
  * Abstract class for sorting
+ * @author Musienko
  */
+
 public abstract class AbstractSorter {
     /**
      * Sorts array

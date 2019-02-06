@@ -1,12 +1,12 @@
+
+package fillers;
+
+import java.util.Arrays;
 /**
  * This class fills arrays in a few ways
  *
  * @author Musienko
  */
-package fillers;
-
-import java.util.Arrays;
-
 public class Fillers {
     /**
      * Creates sorted array

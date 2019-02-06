@@ -1,13 +1,12 @@
-/**
- * @author Musienko
- *
- */
+
 package sorters;
 
 import java.util.Arrays;
 
 /**
  * This class realizes Merge sort using Half division using variable types of sorters
+ * @author Musienko
+ *
  */
 public abstract class Merge extends AbstractSorter {
 

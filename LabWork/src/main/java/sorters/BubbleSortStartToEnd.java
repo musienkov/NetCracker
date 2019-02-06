@@ -1,13 +1,17 @@
+
 package sorters;
 
 /**
- * Class that realizes Bubble sort from start to end array
+ * This class realizes sorting the array using BubbleSort from Start To End
+ * @author Musienko
  */
+
 public class BubbleSortStartToEnd extends BubbleSorter {
     /**
      * Sorts array using Bubble sort from start to end
      * @param array - array that will be sorted
      * @return sorted array
+     * @see BubbleSorter
      */
     public int[] sort(int[] array) {
         int n = array.length;

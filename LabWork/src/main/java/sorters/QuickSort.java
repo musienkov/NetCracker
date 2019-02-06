@@ -2,10 +2,12 @@ package sorters;
 
 /**
  * This class sorts array using a Quick sort
+ * @author Musienko
  */
 public class QuickSort extends AbstractSorter {
     /**
      * Start method for quick sort
+     *
      * @param arr - started array
      * @return sorted array
      */
@@ -17,10 +19,12 @@ public class QuickSort extends AbstractSorter {
 
     /**
      * Sorting array using Quick sort
-     * @param arr - started array
-     * @param low - low point
+     *
+     * @param arr  - started array
+     * @param low  - low point
      * @param high - high point
      * @return sorted array
+     * See also {@link QuickSort#partition(int[], int, int)}
      */
     private int[] quickSort(int arr[], int low, int high) {
         if (low < high) {
@@ -34,10 +38,11 @@ public class QuickSort extends AbstractSorter {
 
     /**
      * Find pivot
-     * @param arr - current array
-     * @param low - low point
+     *
+     * @param arr  - current array
+     * @param low  - low point
      * @param high - high point
-     * @return index of pivot
+     * @return index of pivot {@link QuickSort#quickSort(int[], int, int)}
      */
     private int partition(int arr[], int low, int high) {
         int pivot = arr[high];

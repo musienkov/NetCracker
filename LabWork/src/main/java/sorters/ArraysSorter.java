@@ -1,13 +1,12 @@
-/**
- * @author Musienko
- *
- */
+
 package sorters;
 
 import java.util.Arrays;
 
 /**
- * This class uses a standard sorting
+ * This class realizes sorting the array using Arrays.sort().
+ * @author Musienko
+ *
  */
 public class ArraysSorter extends AbstractSorter {
     /**

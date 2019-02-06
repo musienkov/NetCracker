@@ -1,5 +1,10 @@
 package sorters;
 
+/**
+ * This class realizes merge sort using Arrays.sort()
+ * @author Musienko
+ */
+
 public class MergeArraySort extends Merge {
 
     private ArraysSorter arraysSorter = new ArraysSorter();
@@ -7,6 +12,8 @@ public class MergeArraySort extends Merge {
      * Sorts arrays using merge sort with Array.sort(int[] arr)
      * @param arr - started array
      * @return sorted array
+     * @see ArraysSorter#sort(int[])
+     * @see Merge#merge(int[], int[], int[])
      */
     public int[] sort(int[] arr) {
         int L[] = super.createLeftPart(arr);
