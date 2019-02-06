@@ -28,6 +28,6 @@ public class MergeBubbleSort_end_to_startTest {
 
     @Test(timeout = 1)
     public void sortTime() {
-        mergeBubbleSort_end_to_start.sort(new int[]{4,5,6,8,1,222,3,4,8,9,1000,-19999,14});
+        mergeBubbleSort_end_to_start.sort(new int[]{4, 5, 6, 8, 1, 222, 3, 4, 8, 9, 1000, -19999, 14});
     }
 }

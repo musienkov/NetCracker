@@ -2,6 +2,7 @@ package sorters;
 
 /**
  * This class sorts array <br> using a Quick sort
+ *
  * @author Musienko
  */
 public class QuickSort extends AbstractSorter {
@@ -20,9 +21,9 @@ public class QuickSort extends AbstractSorter {
     /**
      * Sorting array using Quick sort
      *
-     * @param array  - started array
-     * @param low  - low point
-     * @param high - high point
+     * @param array - started array
+     * @param low   - low point
+     * @param high  - high point
      * @return sorted array
      * See also {@link QuickSort#partition(int[], int, int)}
      */
@@ -39,9 +40,9 @@ public class QuickSort extends AbstractSorter {
     /**
      * Find pivot
      *
-     * @param array  - current array
-     * @param low  - low point
-     * @param high - high point
+     * @param array - current array
+     * @param low   - low point
+     * @param high  - high point
      * @return index of pivot {@link QuickSort#quickSort(int[], int, int)}
      */
     private int partition(int[] array, int low, int high) {

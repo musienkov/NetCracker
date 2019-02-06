@@ -8,7 +8,7 @@ public class MergeQuickSortTest {
     MergeQuickSort mergeQuickSort = new MergeQuickSort();
 
     @Test
-    public void sort()  {
+    public void sort() {
 
         int[] array = {5, 4, 222, 1};
         int[] actual = mergeQuickSort.sort(array);
@@ -18,10 +18,10 @@ public class MergeQuickSortTest {
         actual = mergeQuickSort.sort(array);
         expected = new int[]{-999999, -2, 1};
         assertArrayEquals(expected, actual);
-        array = new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+        array = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         actual = mergeQuickSort.sort(array);
-        expected = new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-        assertArrayEquals(expected,actual);
+        expected = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        assertArrayEquals(expected, actual);
 
     }
 
@@ -32,6 +32,6 @@ public class MergeQuickSortTest {
 
     @Test(timeout = 1)
     public void sortTime() {
-        mergeQuickSort.sort(new int[]{14,-199999,2999,928,222,3,4,8,9,1000,-19999,14});
+        mergeQuickSort.sort(new int[]{14, -199999, 2999, 928, 222, 3, 4, 8, 9, 1000, -19999, 14});
     }
 }

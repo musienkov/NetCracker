@@ -29,6 +29,6 @@ public class MergeArraySortTest {
 
     @Test(timeout = 3)
     public void sortTime() {
-        mergeArraySort.sort(new int[]{4,5,6,8,1,222,3,4,8,9,1000,-19999,14,20009,2847,0,0,0,0,0,0});
+        mergeArraySort.sort(new int[]{4, 5, 6, 8, 1, 222, 3, 4, 8, 9, 1000, -19999, 14, 20009, 2847, 0, 0, 0, 0, 0, 0});
     }
 }

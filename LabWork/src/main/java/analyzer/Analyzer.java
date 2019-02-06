@@ -1,10 +1,12 @@
 
 
 package analyzer;
+
 import fillers.Filler;
 import fillers.Fillers;
 import org.reflections.Reflections;
 import sorters.AbstractSorter;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -12,10 +14,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+
 /**
  * This class analyze performance rate of variable types of sorting and filling
- * @author Musienko
  *
+ * @author Musienko
  */
 public class Analyzer {
     /**
@@ -29,8 +32,8 @@ public class Analyzer {
     private static List<Method> getMethodsAnnotatedWith(final Class<?> type, final Class<? extends Annotation> annotation) {
         final List<Method> methods = new ArrayList<Method>();
         Class<?> klass = type;
-        while (klass != Object.class) { // need to iterated thought hierarchy in order to retrieve methods from above the current instance
-            // iterate though the list of methods declared in the class represented by klass variable, and add those annotated with the specified annotation
+        while (klass != Object.class) {
+
             final List<Method> allMethods = new ArrayList<Method>(Arrays.asList(klass.getDeclaredMethods()));
             for (final Method method : allMethods) {
                 if (method.isAnnotationPresent(annotation)) {
@@ -39,7 +42,7 @@ public class Analyzer {
                     methods.add(method);
                 }
             }
-            // move to the upper class in the hierarchy in search for more methods
+
             klass = klass.getSuperclass();
         }
         return methods;
@@ -47,6 +50,7 @@ public class Analyzer {
 
     /**
      * Automatic analyzer of all sorts and all fillers
+     *
      * @param arrayLength - length of array
      */
     public static void analyzer(int arrayLength) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
@@ -72,9 +76,9 @@ public class Analyzer {
                         Method setNameMethod = sorterObject.getClass().getMethod("sort", int[].class);
 
                         long startTime1 = System.nanoTime();
-                        setNameMethod.invoke(sorterObject, myArray); // pass arg
+                        setNameMethod.invoke(sorterObject, myArray);
                         long sortTime1 = System.nanoTime() - startTime1;
-                        System.out.println("Time: "+ sortTime1+" ns");
+                        System.out.println("Time: " + sortTime1 + " ns");
                     }
                 }
             }

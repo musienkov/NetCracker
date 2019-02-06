@@ -1,13 +1,17 @@
 package sorters;
+
 /**
  * This class realizes merge sort <br> using QuickSort
+ *
  * @author Musienko
  */
 public class MergeQuickSort extends Merge {
 
     private QuickSort quickSort = new QuickSort();
+
     /**
      * Sorts arrays using merge sort with Quick sort
+     *
      * @param array - started array
      * @return sorted array
      * @see QuickSort#sort(int[])

@@ -2,14 +2,17 @@ package sorters;
 
 /**
  * This class realizes merge sort <br> using Arrays.sort()
+ *
  * @author Musienko
  */
 
 public class MergeArraySort extends Merge {
 
     private ArraysSorter arraysSorter = new ArraysSorter();
+
     /**
      * Sorts arrays using merge sort with Array.sort(int[] arr)
+     *
      * @param array - started array
      * @return sorted array
      * @see ArraysSorter#sort(int[])

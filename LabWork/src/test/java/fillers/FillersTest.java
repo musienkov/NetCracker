@@ -6,34 +6,33 @@ import static org.junit.Assert.*;
 
 public class FillersTest {
 
-    @Test(expected = NegativeArraySizeException .class)
+    @Test(expected = NegativeArraySizeException.class)
     public void createSortedArrayNegativeSize() {
 
         Fillers.createSortedArray(-1);
 
     }
 
-    @Test(expected = NegativeArraySizeException .class)
+    @Test(expected = NegativeArraySizeException.class)
     public void createSortedWithRandomNegativeSize() {
 
         Fillers.createSortedWithRandom(-111);
 
     }
 
-    @Test(expected = NegativeArraySizeException .class)
+    @Test(expected = NegativeArraySizeException.class)
     public void createReversSortedArrayNegativeSize() {
 
         Fillers.createReversSortedArray(-13);
 
     }
 
-    @Test(expected = NegativeArraySizeException .class)
+    @Test(expected = NegativeArraySizeException.class)
     public void createUnsortedArrayNegativeSize() {
 
         Fillers.createUnsortedArray(-12);
 
     }
-
 
 
     @Test(timeout = 5)
@@ -57,50 +56,49 @@ public class FillersTest {
     }
 
 
-
-
-
-
     @Test
     public void createSortedArray() {
-       int[]array =  Fillers.createSortedArray(5);
+        int[] array = Fillers.createSortedArray(5);
         boolean expected = true;
         boolean actual = false;
-        for (int i = 0; i <array.length-1 ; i++) {
-            if (array[i+1]>=array[i])actual = true;
+        for (int i = 0; i < array.length - 1; i++) {
+            if (array[i + 1] >= array[i]) actual = true;
             else {
-                actual=false;
-            break;}
+                actual = false;
+                break;
+            }
         }
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
     }
 
     @Test
     public void createSortedWithRandom() {
-        int[]array =  Fillers.createSortedWithRandom(5);
+        int[] array = Fillers.createSortedWithRandom(5);
         boolean expected = true;
         boolean actual = false;
-        for (int i = 0; i <array.length-2 ; i++) {
-            if (array[i+1]>=array[i])actual = true;
+        for (int i = 0; i < array.length - 2; i++) {
+            if (array[i + 1] >= array[i]) actual = true;
             else {
-                actual=false;
-                break;}
+                actual = false;
+                break;
+            }
         }
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
     }
 
     @Test
     public void createReversSortedArray() {
-        int[]array =  Fillers.createReversSortedArray(5);
+        int[] array = Fillers.createReversSortedArray(5);
         boolean expected = true;
         boolean actual = false;
-        for (int i = 0; i <array.length-1 ; i++) {
-            if (array[i+1]<=array[i])actual = true;
+        for (int i = 0; i < array.length - 1; i++) {
+            if (array[i + 1] <= array[i]) actual = true;
             else {
-                actual=false;
-                break;}
+                actual = false;
+                break;
+            }
         }
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
     }
 
     @Test
