@@ -12,12 +12,15 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
 public class Output {
-    private Workbook wb = new HSSFWorkbook();
+
+    private static List<String> fillers = Analyzer.getNamesOfFillers();
     private List<String> subclasses = Analyzer.getNamesOfSubclasses();
     private static Map<Integer, Object[]> sortedArrayFiller = new TreeMap<Integer, Object[]>();
     private static Map<Integer, Object[]> unsortedArrayFiller = new TreeMap<Integer, Object[]>();
     private static Map<Integer, Object[]> reversSortedArrayFiller = new TreeMap<Integer, Object[]>();
     private static Map<Integer, Object[]> sortedWithRandomFiller = new TreeMap<Integer, Object[]>();
+
+
 
     public void write()
             throws FileNotFoundException, IOException {
@@ -29,35 +32,32 @@ public class Output {
         // OutputStream fileOut = new FileOutputStream("Output.xls");
 
         // Creating Sheets using sheet object
-        Sheet sheet1 = wb.createSheet("Array");
+        Workbook wb = new HSSFWorkbook();
 
 
-        // This data needs to be written (Object[])
-        int i = 0;
-        Map<String, Object[]> data = new TreeMap<String, Object[]>();
-        data.put("1", new Object[]{subclasses.get(i++), subclasses.get(i++), subclasses.get(i++), subclasses.get(i++), subclasses.get(i++), subclasses.get(i++), subclasses.get(i++), subclasses.get(i),});
-        data.put("2", new Object[]{1, "Pankaj", "Kumar"});
-        data.put("3", new Object[]{2, "Prakashni", "Yadav"});
-        data.put("4", new Object[]{3, "Ayan", "Mondal"});
-        data.put("5", new Object[]{4, "Virat", "kohli"});
 
-        // Iterate over data and write to sheet
-        Set<Integer> keyset = sortedArrayFiller.keySet();
-        int rownum = 0;
-        for (Integer key : keyset) {
-            // this creates a new row in the sheet
-            Row row = sheet1.createRow(rownum++);
-            Object[] objArr = sortedArrayFiller.get(key);
-            int cellnum = 0;
-            for (Object obj : objArr) {
-                // this line creates a cell in the next column of that row
-                Cell cell = row.createCell(cellnum++);
-                if (obj instanceof String)
-                    cell.setCellValue((String) obj);
-                else if (obj instanceof Long)
-                    cell.setCellValue((Long) obj);
+        for (String fillerName:fillers
+             ) {
+            Sheet sheet = wb.createSheet(fillerName);
+            Row row = sheet.createRow(0);
+            Cell size = row.createCell(0);
+            size.setCellValue("Size");
+            int k = 0;
+            for (int i = 1; i <= 8; i++) {
+                Cell sorter = row.createCell(i);
+                sorter.setCellValue(subclasses.get(k++));
             }
+
+            chooseSheet(sheet);
         }
+
+
+
+
+
+
+
+
         try {
             // this Writes the workbook gfgcontribute
             FileOutputStream out = new FileOutputStream(new File("MyOutput.xls"));
@@ -96,25 +96,67 @@ public class Output {
     public static void fillMap(int arraySize, String filler, ArrayList<Long> times) {
         if (filler.equals("createSortedArray")) {
             int i = 0;
-            sortedArrayFiller.put(arraySize, new Object[]{times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i)});
+            sortedArrayFiller.put(arraySize, new Object[]{arraySize, times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i)});
         } else if (filler.equals("createUnsortedArray")) {
             int i = 0;
-            unsortedArrayFiller.put(arraySize, new Object[]{times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i)});
+            unsortedArrayFiller.put(arraySize, new Object[]{arraySize,times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i)});
 
         } else if (filler.equals("createReversSortedArray")) {
             int i = 0;
-            reversSortedArrayFiller.put(arraySize, new Object[]{times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i)});
+            reversSortedArrayFiller.put(arraySize, new Object[]{arraySize,times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i)});
 
         } else if (filler.equals("createSortedWithRandom")) {
             int i = 0;
-            sortedWithRandomFiller.put(arraySize, new Object[]{times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i)});
+            sortedWithRandomFiller.put(arraySize, new Object[]{arraySize,times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i)});
 
         }
 
 
     }
 
-    public void fillTable(Set data) {
+    public void fillTable(Sheet sheet, Map<Integer,Object[]> map) {
+        // Iterate over data and write to sheet
+        Set<Integer> keySet = map.keySet();
+        int rownum = 1;
+        for (Integer key : keySet) {
+            // this creates a new row in the sheet
+            Row row = sheet.createRow(rownum++);
+            Object[] objArr = map.get(key);
+            int cellnum = 0;
+            for (Object obj : objArr) {
+                // this line creates a cell in the next column of that row
+                Cell cell = row.createCell(cellnum++);
+                if (obj instanceof Integer)
+                    cell.setCellValue((Integer) obj);
+                else if (obj instanceof Long)
+                    cell.setCellValue((Long) obj);
+            }
+        }
+    }
+    public void chooseSheet(Sheet sheet){
+
+        switch (sheet.getSheetName()){
+            case "createSortedArray":
+                fillTable(sheet,sortedArrayFiller);
+                break;
+
+            case "createUnsortedArray":
+                fillTable(sheet,unsortedArrayFiller);
+                break;
+
+            case "createReversSortedArray":
+                fillTable(sheet,reversSortedArrayFiller);
+                break;
+
+            case "createSortedWithRandom":
+                fillTable(sheet,sortedWithRandomFiller);
+                break;
+
+             default:
+                 break;
+        }
+
+
 
     }
 }

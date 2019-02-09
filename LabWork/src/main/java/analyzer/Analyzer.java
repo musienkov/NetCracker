@@ -28,6 +28,8 @@ public class Analyzer {
     private static Set<Class<? extends AbstractSorter>> subTypes = reflections.getSubTypesOf(AbstractSorter.class);
     private static List<Method> fillerMethods = Analyzer.getMethodsAnnotatedWith(Fillers.class, Filler.class);
     private static List<Integer> sizesList = new ArrayList<>();
+
+
     /**
      * Find method marked by annotation
      *
@@ -151,6 +153,17 @@ public class Analyzer {
 
         }
         return namesOfSubclasses;
+    }
+    public static List<String> getNamesOfFillers(){
+        List<String> fillers = new ArrayList<>();
+
+        for (Method m:fillerMethods
+             ) {
+            fillers.add(m.getName());
+
+        }
+        return fillers;
+
     }
 
     private static void setDataForOutput(){
