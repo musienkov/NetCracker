@@ -143,13 +143,14 @@ public class Analyzer {
 
         }
 
+
     }
     public static List<String> getNamesOfSubclasses(){
         List<String> namesOfSubclasses = new ArrayList<>();
         for (Class<?> c:subTypes
         ) {
             if(!(c.getName().equals("sorters.BubbleSorter")) && !(c.getName().equals("sorters.Merge")))
-                namesOfSubclasses.add(c.getName());
+                namesOfSubclasses.add(c.getName().substring(8));
 
         }
         return namesOfSubclasses;
@@ -159,16 +160,16 @@ public class Analyzer {
 
         for (Method m:fillerMethods
              ) {
-            fillers.add(m.getName());
+            fillers.add(m.getName().substring(6));
 
         }
         return fillers;
 
     }
 
-    private static void setDataForOutput(){
+    public static List<Integer> getSizes(){
 
-
+        return sizesList;
     }
 
 

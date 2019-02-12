@@ -10,11 +10,19 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.charts.*;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xddf.usermodel.*;
+import org.apache.poi.xddf.usermodel.chart.*;
+import org.apache.poi.xddf.usermodel.chart.AxisCrosses;
+import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.xssf.usermodel.charts.XSSFChartLegend;
 
 public class Output {
 
     private static List<String> fillers = Analyzer.getNamesOfFillers();
     private List<String> subclasses = Analyzer.getNamesOfSubclasses();
+    private static List<Integer> sizes = Analyzer.getSizes();
     private static Map<Integer, Object[]> sortedArrayFiller = new TreeMap<Integer, Object[]>();
     private static Map<Integer, Object[]> unsortedArrayFiller = new TreeMap<Integer, Object[]>();
     private static Map<Integer, Object[]> reversSortedArrayFiller = new TreeMap<Integer, Object[]>();
@@ -32,13 +40,32 @@ public class Output {
         // OutputStream fileOut = new FileOutputStream("Output.xls");
 
         // Creating Sheets using sheet object
-        Workbook wb = new HSSFWorkbook();
+        XSSFWorkbook wb = new XSSFWorkbook();
+        final int NUM_OF_ROWS = sizes.size();
+        final int NUM_OF_COLUMNS = 9;
 
+        System.out.println("NUM OF ROWS: "+NUM_OF_ROWS);
+        System.out.println("SIZES:");
+        for (Integer a:sizes
+             ) {
+            System.out.print(a+" ");
+        }
 
+        System.out.println("SUBCLASSES:");
+        for (String s: subclasses
+             ) {
+            System.out.println(s);
+        }
+
+        System.out.println("FILLERS:");
+        for (String s: fillers
+        ) {
+            System.out.println(s);
+        }
 
         for (String fillerName:fillers
              ) {
-            Sheet sheet = wb.createSheet(fillerName);
+            XSSFSheet sheet = wb.createSheet(fillerName);
             Row row = sheet.createRow(0);
             Cell size = row.createCell(0);
             size.setCellValue("Size");
@@ -49,6 +76,78 @@ public class Output {
             }
 
             chooseSheet(sheet);
+
+
+
+            XSSFDrawing drawing = sheet.createDrawingPatriarch();
+            XSSFClientAnchor anchor = drawing.createAnchor(0, 0, 0, 0, 0, 5, 10, 15);
+
+            XSSFChart chart = drawing.createChart(anchor);
+            XDDFChartLegend legend = chart.getOrAddLegend();
+            legend.setPosition(org.apache.poi.xddf.usermodel.chart.LegendPosition.TOP_RIGHT);
+
+            // Use a category axis for the bottom axis.
+            XDDFCategoryAxis bottomAxis = chart.createCategoryAxis(org.apache.poi.xddf.usermodel.chart.AxisPosition.BOTTOM);
+            bottomAxis.setTitle("Number of elements"); // https://stackoverflow.com/questions/32010765
+            XDDFValueAxis leftAxis = chart.createValueAxis(org.apache.poi.xddf.usermodel.chart.AxisPosition.LEFT);
+            leftAxis.setTitle("Time of Sorting");
+            leftAxis.setCrosses(AxisCrosses.AUTO_ZERO);
+
+            XDDFDataSource<Double> xs = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, NUM_OF_ROWS, 0, 0));
+            XDDFNumericalDataSource<Double> ys1 = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, NUM_OF_ROWS, 1, 1));
+            XDDFNumericalDataSource<Double> ys2 = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, NUM_OF_ROWS, 2, 2));
+            XDDFNumericalDataSource<Double> ys3 = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, NUM_OF_ROWS, 3, 3));
+            XDDFNumericalDataSource<Double> ys4 = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, NUM_OF_ROWS, 4, 4));
+            XDDFNumericalDataSource<Double> ys5 = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, NUM_OF_ROWS, 5, 5));
+            XDDFNumericalDataSource<Double> ys6 = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, NUM_OF_ROWS, 6, 6));
+            XDDFNumericalDataSource<Double> ys7 = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, NUM_OF_ROWS, 7, 7));
+            XDDFNumericalDataSource<Double> ys8 = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, NUM_OF_ROWS, 8, 8));
+
+            XDDFLineChartData data = (XDDFLineChartData) chart.createData(ChartTypes.LINE, bottomAxis, leftAxis);
+            XDDFLineChartData.Series series1 = (XDDFLineChartData.Series) data.addSeries(xs, ys1);
+            series1.setTitle(subclasses.get(0), null); // https://stackoverflow.com/questions/21855842
+            series1.setSmooth(false); // https://stackoverflow.com/questions/29014848
+           series1.setMarkerStyle(MarkerStyle.STAR); // https://stackoverflow.com/questions/39636138
+            XDDFLineChartData.Series series2 = (XDDFLineChartData.Series) data.addSeries(xs, ys2);
+            series2.setTitle(subclasses.get(1), null);
+            series2.setSmooth(false);
+            series2.setMarkerSize((short) 6);
+            series2.setMarkerStyle(MarkerStyle.TRIANGLE); // https://stackoverflow.com/questions/39636138
+
+            XDDFLineChartData.Series series3 = (XDDFLineChartData.Series) data.addSeries(xs, ys3);
+            series3.setTitle(subclasses.get(2), null);
+
+            XDDFLineChartData.Series series4 = (XDDFLineChartData.Series) data.addSeries(xs, ys4);
+            series4.setTitle(subclasses.get(3), null);
+
+            XDDFLineChartData.Series series5 = (XDDFLineChartData.Series) data.addSeries(xs, ys5);
+            series5.setTitle(subclasses.get(4), null);
+
+            XDDFLineChartData.Series series6 = (XDDFLineChartData.Series) data.addSeries(xs, ys6);
+            series6.setTitle(subclasses.get(5), null);
+
+            XDDFLineChartData.Series series7 = (XDDFLineChartData.Series) data.addSeries(xs, ys7);
+            series7.setTitle(subclasses.get(6), null);
+            chart.plot(data);
+
+            XDDFLineChartData.Series series8 = (XDDFLineChartData.Series) data.addSeries(xs, ys8);
+            series8.setTitle(subclasses.get(7), null);
+            chart.plot(data);
+
+            // if your series have missing values like https://stackoverflow.com/questions/29014848
+            // chart.displayBlanksAs(DisplayBlanks.GAP);
+
+            // https://stackoverflow.com/questions/24676460
+            solidLineSeries(data, 0, PresetColor.CHARTREUSE);
+           solidLineSeries(data, 1, PresetColor.TURQUOISE);
+
+
+
+
+
+
+
+
         }
 
 
@@ -63,7 +162,7 @@ public class Output {
             FileOutputStream out = new FileOutputStream(new File("MyOutput.xls"));
             wb.write(out);
             out.close();
-            System.out.println("gfgcontribute.xlsx written successfully on disk.");
+            System.out.println("MyOutput.xls written successfully on disk.");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -92,8 +191,20 @@ public class Output {
 
         wb.write(fileOut);*/
     }
-
+    private static void solidLineSeries(XDDFChartData data, int index, PresetColor color) {
+        XDDFSolidFillProperties fill = new XDDFSolidFillProperties(XDDFColor.from(color));
+        XDDFLineProperties line = new XDDFLineProperties();
+        line.setFillProperties(fill);
+        XDDFChartData.Series series = data.getSeries().get(index);
+        XDDFShapeProperties properties = series.getShapeProperties();
+        if (properties == null) {
+            properties = new XDDFShapeProperties();
+        }
+        properties.setLineProperties(line);
+        series.setShapeProperties(properties);
+    }
     public static void fillMap(int arraySize, String filler, ArrayList<Long> times) {
+
         if (filler.equals("createSortedArray")) {
             int i = 0;
             sortedArrayFiller.put(arraySize, new Object[]{arraySize, times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i)});
@@ -133,22 +244,22 @@ public class Output {
             }
         }
     }
-    public void chooseSheet(Sheet sheet){
+    public void chooseSheet(XSSFSheet sheet){
 
         switch (sheet.getSheetName()){
-            case "createSortedArray":
+            case "SortedArray":
                 fillTable(sheet,sortedArrayFiller);
                 break;
 
-            case "createUnsortedArray":
+            case "UnsortedArray":
                 fillTable(sheet,unsortedArrayFiller);
                 break;
 
-            case "createReversSortedArray":
+            case "ReversSortedArray":
                 fillTable(sheet,reversSortedArrayFiller);
                 break;
 
-            case "createSortedWithRandom":
+            case "SortedWithRandom":
                 fillTable(sheet,sortedWithRandomFiller);
                 break;
 
@@ -159,4 +270,5 @@ public class Output {
 
 
     }
+
 }

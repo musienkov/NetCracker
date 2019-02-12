@@ -20,12 +20,15 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        Analyzer.analyzer2(10);
-        Analyzer.analyzer2(20);
-        Analyzer.analyzer2(30);
+
+
+        for (int i = 1; i <=1000 ; i*=10) {
+            Analyzer.analyzer2(i);
+        }
+
         Output output = new Output();
         output.write();
-        //TestClass test = new TestClass();
+       // TestClass test = new TestClass();
        // test.test();
 
 
