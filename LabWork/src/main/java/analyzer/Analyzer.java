@@ -7,7 +7,6 @@ import fillers.Fillers;
 import org.reflections.Reflections;
 import output.Output;
 import sorters.AbstractSorter;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -23,7 +22,6 @@ import java.util.Set;
  */
 public class Analyzer {
 
-    ArrayList<Long> arrayTimes = new ArrayList();
     private static Reflections reflections = new Reflections("sorters");
     private static Set<Class<? extends AbstractSorter>> subTypes = reflections.getSubTypesOf(AbstractSorter.class);
     private static List<Method> fillerMethods = Analyzer.getMethodsAnnotatedWith(Fillers.class, Filler.class);
@@ -57,50 +55,19 @@ public class Analyzer {
         return methods;
     }
 
+
     /**
      * Automatic analyzer of all sorts and all fillers
-     *
-     * @param arrayLength - length of array
+     * @param arrayLength
+     * @throws ClassNotFoundException
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     * @throws NoSuchMethodException
+     * @throws InvocationTargetException
      */
     public static void analyzer(int arrayLength) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
 
         sizesList.add(arrayLength);
-
-
-        for (Class<?> c : subTypes
-        ) {
-            if(!(c.getName().equals("sorters.BubbleSorter")) && !(c.getName().equals("sorters.Merge"))) {
-                System.out.println("Class: " + c.getName());
-                Method[] methods = c.getMethods();
-                for (Method method : methods) {
-                    if (method.getName().equals("sort") ) {
-                        for (Method m : fillerMethods
-                        ) {
-                            Class<?> myFiller = Class.forName(m.getDeclaringClass().getName());
-                            Object fillerObject = myFiller.newInstance();
-                            String fillerName;
-                            fillerName = m.getName();
-                            Method setFillerMethod = fillerObject.getClass().getMethod(fillerName, int.class);
-                            int[] myArray = (int[]) setFillerMethod.invoke(fillerObject, arrayLength);
-                            Class<?> myClass = Class.forName(c.getName());
-                            Object sorterObject = myClass.newInstance();
-                            Method setNameMethod = sorterObject.getClass().getMethod("sort", int[].class);
-                            System.out.println("Filler: " + m.getName());
-                            long startTime1 = System.nanoTime();
-                            setNameMethod.invoke(sorterObject, myArray);
-                            long sortTime1 = System.nanoTime() - startTime1;
-
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public static void analyzer2(int arrayLength) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
-
-        sizesList.add(arrayLength);
-
         ArrayList<Long> times = new ArrayList<>();
         for (Method m : fillerMethods
         ) {
@@ -109,42 +76,34 @@ public class Analyzer {
             String fillerName;
             fillerName = m.getName();
             Method setFillerMethod = fillerObject.getClass().getMethod(fillerName, int.class);
-            int[] myArray = (int[]) setFillerMethod.invoke(fillerObject, arrayLength);
-            System.out.println("Filler: " + m.getName());
+            int[] array = (int[]) setFillerMethod.invoke(fillerObject, arrayLength);
 
             for (Class<?> c:subTypes
                  ) {
                 if (!(c.getName().equals("sorters.BubbleSorter")) && !(c.getName().equals("sorters.Merge"))) {
-
                     Method[] methods = c.getMethods();
                     for (Method method : methods) {
                         if (method.getName().equals("sort")) {
-
-                            Class<?> myClass = Class.forName(c.getName());
-                            Object sorterObject = myClass.newInstance();
+                            Class<?> sorterClass = Class.forName(c.getName());
+                            Object sorterObject = sorterClass.newInstance();
                             Method setNameMethod = sorterObject.getClass().getMethod("sort", int[].class);
-                            System.out.print("Class: " + c.getName());
                             long startTime = System.nanoTime();
-                            setNameMethod.invoke(sorterObject, myArray);
+                            setNameMethod.invoke(sorterObject, array);
                             long sortTime = System.nanoTime() - startTime;
-                            System.out.println(" = "+sortTime);
                             times.add(sortTime);
-
-
                         }
                     }
-
                 }
-
-
             }
             Output.fillMap(arrayLength,m.getName(),times);
             times.clear();
-
         }
-
-
     }
+
+    /**
+     * Get subclass names
+     * @return subclasse's names list
+     */
     public static List<String> getNamesOfSubclasses(){
         List<String> namesOfSubclasses = new ArrayList<>();
         for (Class<?> c:subTypes
@@ -155,18 +114,23 @@ public class Analyzer {
         }
         return namesOfSubclasses;
     }
+    /**
+     * Get fillers names
+     * @return filler's names list
+     */
     public static List<String> getNamesOfFillers(){
         List<String> fillers = new ArrayList<>();
 
         for (Method m:fillerMethods
              ) {
             fillers.add(m.getName().substring(6));
-
         }
         return fillers;
-
     }
-
+    /**
+     * Get all sizes of arrays
+     * @return size's list
+     */
     public static List<Integer> getSizes(){
 
         return sizesList;
