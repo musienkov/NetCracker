@@ -1,6 +1,8 @@
 
 package sorters;
 
+import java.util.Arrays;
+
 /**
  * This class realizes sorting the array <br> using BubbleSort from End To Start
  *
@@ -29,6 +31,7 @@ public class BubbleSortEndToStart extends BubbleSorter {
                     swap(array, j, j - 1);
                 }
             }
+
         return array;
     }
 }

@@ -1,7 +1,9 @@
 
 package fillers;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  * This class fills arrays in a few ways
@@ -17,12 +19,12 @@ public class Fillers {
      */
     @Filler
     public static int[] createSortedArray(int length) {
+
+       Random random = new Random();
         int[] array = new int[length];
-        if (length > 0) {
-            array[0] = (int) (Math.random() * 30);
-            for (int i = 1; i < length; i++) {
-                array[i] = (int) ((Math.random() * 30) + array[i - 1]);
-            }
+        array[0] = 1;
+        for (int i = 1; i < length; i++) {
+            array[i] = array[i - 1] + random.nextInt(10);
         }
         return array;
     }
@@ -36,15 +38,10 @@ public class Fillers {
     @Filler
     public static int[] createSortedWithRandom(int length) {
 
-        int[] array = new int[length];
-        if (length > 0) {
-            array[0] = (int) (Math.random() * 30);
-            for (int i = 1; i < length; i++) {
-                array[i] = (int) ((Math.random() * 30) + array[i - 1]);
-            }
+        int[] array = createSortedArray(length);
 
-            array[length - 1] = (int) (Math.random() * 100);
-        }
+        array[length-1] = (int)(Math.random()*50);
+        System.out.println("Filler: "+Arrays.toString(array));
         return array;
     }
 
@@ -56,22 +53,16 @@ public class Fillers {
      */
     @Filler
     public static int[] createReversSortedArray(int length) {
-        int[] array = new int[length];
-        if (length > 0) {
-            for (int i = 0; i < length; i++) {
-                array[i] = (int) (Math.random() * 100);
-            }
-            Arrays.sort(array);
-            int i = 0;
-            int j = array.length - 1;
-            int tmp;
-            while (j > i) {
-                tmp = array[j];
-                array[j] = array[i];
-                array[i] = tmp;
-                j--;
-                i++;
-            }
+        int[] array = createSortedArray(length);
+        int i = 0;
+        int j = array.length - 1;
+        int tmp;
+        while (j > i) {
+            tmp = array[j];
+            array[j] = array[i];
+            array[i] = tmp;
+            j--;
+            i++;
         }
         return array;
     }

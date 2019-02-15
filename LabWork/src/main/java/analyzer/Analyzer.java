@@ -77,18 +77,19 @@ public class Analyzer {
             fillerName = m.getName();
             Method setFillerMethod = fillerObject.getClass().getMethod(fillerName, int.class);
             int[] array = (int[]) setFillerMethod.invoke(fillerObject, arrayLength);
-
+            System.out.println(m.getName());
             for (Class<?> c:subTypes
                  ) {
                 if (!(c.getName().equals("sorters.BubbleSorter")) && !(c.getName().equals("sorters.Merge"))) {
                     Method[] methods = c.getMethods();
                     for (Method method : methods) {
                         if (method.getName().equals("sort")) {
+                            System.out.println(c.getName());
                             Class<?> sorterClass = Class.forName(c.getName());
                             Object sorterObject = sorterClass.newInstance();
                             Method setNameMethod = sorterObject.getClass().getMethod("sort", int[].class);
                             long startTime = System.nanoTime();
-                            setNameMethod.invoke(sorterObject, array);
+                            setNameMethod.invoke(sorterObject, (Object) array);
                             long sortTime = System.nanoTime() - startTime;
                             times.add(sortTime);
                         }

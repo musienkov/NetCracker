@@ -1,5 +1,7 @@
 package sorters;
 
+import java.util.Arrays;
+
 /**
  * This class realizes merge sort <br> using QuickSort
  *
@@ -20,10 +22,12 @@ public class MergeQuickSort extends Merge {
      * See also  {@link Merge#createRightPart(int[])}
      */
     public int[] sort(int[] array) {
+
         int[] leftPart = super.createLeftPart(array);
         int[] rightPart = super.createRightPart(array);
         quickSort.sort(leftPart);
         quickSort.sort(rightPart);
+
         return merge(array, leftPart, rightPart);
     }
 }
