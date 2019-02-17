@@ -4,7 +4,8 @@ package sorters;
 import java.util.Arrays;
 
 /**
- * This class realizes sorting the array <br> using Arrays.sort().
+ * <h1>ArraysSorter</h1>
+ * <p>This class realizes sorting the array using Arrays.sort().</p>
  *
  * @author Musienko
  */

@@ -16,7 +16,12 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * This class analyze performance rate of variable types of sorting and filling
+ * <h1>Analyzer</h1>
+ * <p>This class analyze performance rate of variable types of sorting and filling
+ * using reflection. In the beginning program finds all the functions annotated with @Filler.
+ * Then program finds subclasses of AbstractSorter, invokes method sort with generated array
+ * and measure lead time. Fillers are written into the Set, subclasses of AbstractSorter are
+ * written into the ArrayList. Data from Analyzer will be used in Output class.</p>
  *
  * @author Musienko
  */
@@ -30,7 +35,6 @@ public class Analyzer {
 
     /**
      * Find method marked by annotation
-     *
      * @param type       - Class type
      * @param annotation - annotation which we are looking for
      * @return list of methods marked by annotation
@@ -45,16 +49,13 @@ public class Analyzer {
             for (final Method method : allMethods) {
                 if (method.isAnnotationPresent(annotation)) {
                     Annotation Filler = method.getAnnotation(annotation);
-
                     methods.add(method);
                 }
             }
-
             klass = klass.getSuperclass();
         }
         return methods;
     }
-
 
     /**
      * Automatic analyzer of all sorts and all fillers
@@ -76,18 +77,16 @@ public class Analyzer {
             String fillerName;
             fillerName = m.getName();
             Method setFillerMethod = fillerObject.getClass().getMethod(fillerName, int.class);
-            int[] array = (int[]) setFillerMethod.invoke(fillerObject, arrayLength);
-            System.out.println(m.getName());
             for (Class<?> c:subTypes
                  ) {
                 if (!(c.getName().equals("sorters.BubbleSorter")) && !(c.getName().equals("sorters.Merge"))) {
                     Method[] methods = c.getMethods();
                     for (Method method : methods) {
                         if (method.getName().equals("sort")) {
-                            System.out.println(c.getName());
                             Class<?> sorterClass = Class.forName(c.getName());
                             Object sorterObject = sorterClass.newInstance();
                             Method setNameMethod = sorterObject.getClass().getMethod("sort", int[].class);
+                            int[] array = (int[]) setFillerMethod.invoke(fillerObject, arrayLength);
                             long startTime = System.nanoTime();
                             setNameMethod.invoke(sorterObject, (Object) array);
                             long sortTime = System.nanoTime() - startTime;
@@ -136,7 +135,5 @@ public class Analyzer {
 
         return sizesList;
     }
-
-
 
 }

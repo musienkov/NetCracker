@@ -2,8 +2,8 @@
 
 package sorters;
 
-/**
- * Abstract class for sorting
+/**<h1>AbstractSorter<h1/>
+ * <p>Abstract class for sorting</p>
  *
  * @author Musienko
  */
@@ -11,7 +11,6 @@ package sorters;
 public abstract class AbstractSorter {
     /**
      * Sorts array
-     *
      * @param array - array which will be sorted
      * @return sorted array
      */

@@ -1,6 +1,5 @@
 package output;
 
-
 import java.io.*;
 import java.util.*;
 import analyzer.Analyzer;
@@ -13,13 +12,14 @@ import org.apache.poi.xddf.usermodel.chart.*;
 import org.apache.poi.xddf.usermodel.chart.AxisCrosses;
 import org.apache.poi.xssf.usermodel.*;
 
-
-/**
- * Class for output data
+/**<p>Output</p>
+ * <p>Class for output data. This class receives information
+ * about fillers, sorters, arrays sizes and sorting time
+ * from the Analyzer class, creates a file excel with 4 sheets and
+ * writes the received data there.</p>
  * @author Musienko
  */
 public class Output {
-
     private static List<String> fillers = Analyzer.getNamesOfFillers();
     private List<String> subclasses = Analyzer.getNamesOfSubclasses();
     private static List<Integer> sizes = Analyzer.getSizes();
@@ -28,12 +28,10 @@ public class Output {
     private static Map<Integer, Object[]> reversSortedArrayFiller = new TreeMap<>();
     private static Map<Integer, Object[]> sortedWithRandomFiller = new TreeMap<>();
 
-
     /**
      * Write data into the .xls file
      */
     public void write() throws IOException, FileNotFoundException{
-
         XSSFWorkbook wb = new XSSFWorkbook();
         for (String fillerName:fillers
              ) {
@@ -49,7 +47,6 @@ public class Output {
             }
              chooseSheet(sheet);
              createChart(sheet);
-
         }
         try {
             FileOutputStream out = new FileOutputStream(new File("Output.xls"));
@@ -60,7 +57,6 @@ public class Output {
             e.printStackTrace();
         }
     }
-
     /**
      * Create chart
      * @param sheet sheet on which there will be a chart
@@ -72,13 +68,11 @@ public class Output {
         XSSFChart chart = drawing.createChart(anchor);
         XDDFChartLegend legend = chart.getOrAddLegend();
         legend.setPosition(org.apache.poi.xddf.usermodel.chart.LegendPosition.TOP_RIGHT);
-
         XDDFCategoryAxis bottomAxis = chart.createCategoryAxis(org.apache.poi.xddf.usermodel.chart.AxisPosition.BOTTOM);
         bottomAxis.setTitle("Number of elements");
         XDDFValueAxis leftAxis = chart.createValueAxis(org.apache.poi.xddf.usermodel.chart.AxisPosition.LEFT);
         leftAxis.setTitle("Time of Sorting (ns)");
         leftAxis.setCrosses(AxisCrosses.AUTO_ZERO);
-
         XDDFDataSource<Double> xs = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, NUM_OF_ROWS, 0, 0));
         XDDFNumericalDataSource<Double> ys1 = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, NUM_OF_ROWS, 1, 1));
         XDDFNumericalDataSource<Double> ys2 = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, NUM_OF_ROWS, 2, 2));
@@ -88,40 +82,27 @@ public class Output {
         XDDFNumericalDataSource<Double> ys6 = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, NUM_OF_ROWS, 6, 6));
         XDDFNumericalDataSource<Double> ys7 = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, NUM_OF_ROWS, 7, 7));
         XDDFNumericalDataSource<Double> ys8 = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, NUM_OF_ROWS, 8, 8));
-
         XDDFLineChartData data = (XDDFLineChartData) chart.createData(ChartTypes.LINE, bottomAxis, leftAxis);
         XDDFLineChartData.Series series1 = (XDDFLineChartData.Series) data.addSeries(xs, ys1);
         series1.setTitle(subclasses.get(0), null);
-
         series1.setMarkerStyle(MarkerStyle.STAR);
         XDDFLineChartData.Series series2 = (XDDFLineChartData.Series) data.addSeries(xs, ys2);
         series2.setTitle(subclasses.get(1), null);
-
         series2.setMarkerStyle(MarkerStyle.TRIANGLE);
-
         XDDFLineChartData.Series series3 = (XDDFLineChartData.Series) data.addSeries(xs, ys3);
         series3.setTitle(subclasses.get(2), null);
-
         XDDFLineChartData.Series series4 = (XDDFLineChartData.Series) data.addSeries(xs, ys4);
         series4.setTitle(subclasses.get(3), null);
-
         XDDFLineChartData.Series series5 = (XDDFLineChartData.Series) data.addSeries(xs, ys5);
         series5.setTitle(subclasses.get(4), null);
-
         XDDFLineChartData.Series series6 = (XDDFLineChartData.Series) data.addSeries(xs, ys6);
         series6.setTitle(subclasses.get(5), null);
-
         XDDFLineChartData.Series series7 = (XDDFLineChartData.Series) data.addSeries(xs, ys7);
         series7.setTitle(subclasses.get(6), null);
         chart.plot(data);
-
         XDDFLineChartData.Series series8 = (XDDFLineChartData.Series) data.addSeries(xs, ys8);
         series8.setTitle(subclasses.get(7), null);
         chart.plot(data);
-
-        // if your series have missing values like https://stackoverflow.com/questions/29014848
-        //chart.displayBlanksAs(DisplayBlanks.GAP);
-
         solidLineSeries(data, 0, PresetColor.CHARTREUSE);
         solidLineSeries(data, 1, PresetColor.TURQUOISE);
     }
@@ -167,12 +148,8 @@ public class Output {
         } else if (filler.equals("createSortedWithRandom")) {
             int i = 0;
             sortedWithRandomFiller.put(arraySize, new Object[]{arraySize,times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i++), times.get(i)});
-
         }
-
-
     }
-
     /**
      * Fill the table with data
      * @param sheet sheet on which there will be table

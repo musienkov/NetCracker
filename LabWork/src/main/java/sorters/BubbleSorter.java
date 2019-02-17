@@ -2,7 +2,8 @@
 package sorters;
 
 /**
- * Abstract class Bubble Sorter
+ * <h1>BubbleSorter</h1>
+ * <p>Abstract class Bubble Sorter</p>
  *
  * @author Musienko
  */

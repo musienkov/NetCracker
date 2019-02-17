@@ -1,7 +1,9 @@
 package sorters;
 
+
 /**
- * This class sorts array <br> using a Quick sort
+ * <h1>QuickSort</h1>
+ * <p>This class sorts array using a Quick sort</p>
  *
  * @author Musienko
  */

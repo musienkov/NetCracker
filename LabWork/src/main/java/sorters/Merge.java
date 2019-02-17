@@ -4,7 +4,8 @@ package sorters;
 import java.util.Arrays;
 
 /**
- * This class realizes Merge sort <br> using Half division using variable types of sorters
+ * <h1>Merge</h1>
+ * <p>This class realizes Merge sort using Half division</p>
  *
  * @author Musienko
  */

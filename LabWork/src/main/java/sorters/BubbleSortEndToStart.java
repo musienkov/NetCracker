@@ -1,10 +1,9 @@
 
 package sorters;
 
-import java.util.Arrays;
-
 /**
- * This class realizes sorting the array <br> using BubbleSort from End To Start
+ * <h1>BubbleSortEndToStart</h1>
+ * <p>This class realizes sorting the array using BubbleSort from End To Start</p>
  *
  * @author Musienko
  */

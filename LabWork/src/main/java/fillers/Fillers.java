@@ -1,8 +1,6 @@
 
 package fillers;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -41,7 +39,7 @@ public class Fillers {
         int[] array = createSortedArray(length);
 
         array[length-1] = (int)(Math.random()*50);
-        System.out.println("Filler: "+Arrays.toString(array));
+
         return array;
     }
 
@@ -78,7 +76,7 @@ public class Fillers {
         int[] array = new int[length];
         if (length > 0) {
             for (int i = 0; i < length; i++) {
-                array[i] = (int) (Math.random() * 100);
+                array[i] = (int) (Math.random() * 10000);
             }
         }
         return array;

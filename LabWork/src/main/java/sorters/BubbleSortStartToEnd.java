@@ -2,7 +2,8 @@
 package sorters;
 
 /**
- * This class realizes sorting the array <br> using BubbleSort from Start To End
+ * <h1>BubbleSortStartToEnd</h1>
+ * <p>This class realizes sorting the array using BubbleSort from Start To End</p>
  *
  * @author Musienko
  */
@@ -10,7 +11,6 @@ package sorters;
 public class BubbleSortStartToEnd extends BubbleSorter {
     /**
      * Sorts array using Bubble sort from start to end
-     *
      * @param array - array that will be sorted
      * @return sorted array
      * @see BubbleSorter

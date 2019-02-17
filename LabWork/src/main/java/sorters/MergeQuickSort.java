@@ -3,13 +3,25 @@ package sorters;
 import java.util.Arrays;
 
 /**
- * This class realizes merge sort <br> using QuickSort
+ * <h1>MergeQuickSort</h1>
+ * <p>This class realizes merge sort using QuickSort</p>
  *
  * @author Musienko
  */
-public class MergeQuickSort extends Merge {
-
+public class MergeQuickSort extends Merge implements Runnable{
+    private int[] array;
+    private int recursiveLevel;
+    private int[] sortedArray;
     private QuickSort quickSort = new QuickSort();
+
+    public MergeQuickSort() {
+    }
+
+    public MergeQuickSort(int[] array, int recursiveLevel, int[] sortedArray) {
+        this.array = array;
+        this.recursiveLevel = recursiveLevel;
+        this.sortedArray = sortedArray;
+    }
 
     /**
      * Sorts arrays using merge sort with Quick sort
@@ -21,13 +33,64 @@ public class MergeQuickSort extends Merge {
      * See also  {@link Merge#createLeftPart(int[])}
      * See also  {@link Merge#createRightPart(int[])}
      */
+    @Override
     public int[] sort(int[] array) {
 
-        int[] leftPart = super.createLeftPart(array);
-        int[] rightPart = super.createRightPart(array);
-        quickSort.sort(leftPart);
-        quickSort.sort(rightPart);
+        this.sortedArray = new int[array.length];
+        try {
+            parallelMergeSort(array, 1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        for (int i = 0; i < array.length; i++) {
+            array[i] = this.sortedArray[i];
+        }
 
-        return merge(array, leftPart, rightPart);
+
+        return array;
+    }
+    @Override
+    public void run() {
+        try {
+            parallelMergeSort(array, recursiveLevel);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Merge sort which in parallel sorts the parts of the array in different threads
+     * @param array
+     * @param recursiveLevel
+     * @throws InterruptedException
+     */
+    public void parallelMergeSort(int[] array, int recursiveLevel) throws InterruptedException {
+        long threadCount = Math.round(-(1 - Math.pow(2, recursiveLevel)));
+        if (Runtime.getRuntime().availableProcessors() > threadCount) {
+            recursiveLevel++;
+            int[] leftPart = createLeftPart(array);
+            int[] rightPart = createRightPart(array);
+            int[] sortedLeft = new int[leftPart.length];
+            int[] sortedRight = new int[rightPart.length];
+            Runnable runnable1 = new MergeQuickSort(leftPart, recursiveLevel, sortedLeft);
+            Runnable runnable2 = new MergeQuickSort(rightPart, recursiveLevel, sortedRight);
+            Thread thread1 = new Thread(runnable1);
+            Thread thread2 = new Thread(runnable2);
+            thread1.start();
+            thread2.start();
+            thread1.join();
+            thread2.join();
+            int[] tempArray = merge(array, sortedLeft, sortedRight);
+            for (int i = 0; i < tempArray.length; i++) {
+                this.sortedArray[i] = tempArray[i];
+            }
+        }
+        else {
+            int[] tempArray = quickSort.sort(array);
+            for (int i = 0; i < tempArray.length; i++) {
+                this.sortedArray[i] = tempArray[i];
+            }
+
+        }
     }
 }
